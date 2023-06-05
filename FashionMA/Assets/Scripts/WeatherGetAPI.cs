@@ -39,7 +39,8 @@ public class WeatherGetAPI : MonoBehaviour
         }
     }
 
-    public void InitData()
+    // 초단기 실황을 출력할 경우
+    public void InitDataGetUltraSrtNcst()
     {
         // JsonData ItemData = JsonMapper.ToObject(jsonResult);
         // 기온(T1H)
@@ -54,5 +55,11 @@ public class WeatherGetAPI : MonoBehaviour
 
 
         // string temp = ItemData[""]
+    }
+
+    // 단기 예보를 출력할 경우
+    public void InitDataGetVilageFcst()
+    {
+
     }
 }
