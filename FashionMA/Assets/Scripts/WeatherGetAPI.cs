@@ -20,7 +20,7 @@ public class WeatherGetAPI : MonoBehaviour
     private int base_time = 1400;
     private int nx = 60;
     private int ny = 127;
-    public int forecastTypeNum = 1; // 선택할 예보 - 초단기 실황(0) , 단기 예보(1)
+    
 
     void Start()
     {
@@ -32,11 +32,11 @@ public class WeatherGetAPI : MonoBehaviour
         // 기본값 지정
         string apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_data}&base_time={base_time}&nx={nx}&ny={ny}";
 
-        if (forecastTypeNum == 0)  // 초단기 실황
+        if (UniteData.forecastTypeNum == 0)  // 초단기 실황
         {
             apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_data}&base_time={base_time}&nx={nx}&ny={ny}";
         }
-        else if(forecastTypeNum == 1) // 단기 예보
+        else if(UniteData.forecastTypeNum == 1) // 단기 예보
         {
             apiUrl = $"{forecastUrl_VilageFcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_data}&base_time={base_time}&nx={nx}&ny={ny}";
         }
@@ -48,8 +48,8 @@ public class WeatherGetAPI : MonoBehaviour
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
                 jsonResult = webRequest.downloadHandler.text;
-                if (forecastTypeNum == 0) InitDataGetUltraSrtNcst(jsonResult);
-                else if (forecastTypeNum == 1) InitDataGetVilageFcst(jsonResult);
+                if (UniteData.forecastTypeNum == 0) InitDataGetUltraSrtNcst(jsonResult);
+                else if (UniteData.forecastTypeNum == 1) InitDataGetVilageFcst(jsonResult);
                 //Debug.Log(jsonResult);
             }
             else
