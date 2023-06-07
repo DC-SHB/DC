@@ -71,7 +71,7 @@ public class LoadDustApi : MonoBehaviour
         }
         else
         {
-            //Debug.Log(www.downloadHandler.text);
+            Debug.Log(www.downloadHandler.text);
             jsonResult = www.downloadHandler.text;
             InitData();
         }
