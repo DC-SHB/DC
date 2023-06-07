@@ -16,18 +16,10 @@ public class WeatherGetAPI : MonoBehaviour
     private string dataType = "JSON";
     string jsonResult;
 
-    // 초단기 실황 변수
-    public float temp = 0f; // 온도
-    public int pty = 0; // 강수 형태
-    public int reh = 0; // 습도
-    public float wsd = 0; // 풍속
-
-    // 단기 예보 변수
-    public int pop = 0; // 강수 확률
-    public int sky = 0; // 하늘 상태
-    public float tmn = 0f; // 일 최저기온
-    public float tmx = 0f; // 일 최고기온
-
+    private int base_data = 20230607;
+    private int base_time = 1400;
+    private int nx = 60;
+    private int ny = 127;
     public int forecastTypeNum = 1; // 선택할 예보 - 초단기 실황(0) , 단기 예보(1)
 
     void Start()
@@ -38,15 +30,15 @@ public class WeatherGetAPI : MonoBehaviour
     IEnumerator GetWeatherData()
     {
         // 기본값 지정
-        string apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date=20230605&base_time=1400&nx=60&ny=127";
+        string apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_data}&base_time={base_time}&nx={nx}&ny={ny}";
 
         if (forecastTypeNum == 0)  // 초단기 실황
         {
-            apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date=20230605&base_time=1400&nx=60&ny=127";
+            apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_data}&base_time={base_time}&nx={nx}&ny={ny}";
         }
         else if(forecastTypeNum == 1) // 단기 예보
         {
-            apiUrl = $"{forecastUrl_VilageFcst}?serviceKey={apiKey}&dataType={dataType}&base_date=20230605&base_time=1400&nx=60&ny=127";
+            apiUrl = $"{forecastUrl_VilageFcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_data}&base_time={base_time}&nx={nx}&ny={ny}";
         }
         
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
@@ -79,27 +71,27 @@ public class WeatherGetAPI : MonoBehaviour
 
             if ((string)item["category"] == "T1H") // 기온(T1H)
             {
-                temp = float.Parse((string)item["obsrValue"]);
-                Debug.Log("기온 : " + temp);
+                UniteData.temp = float.Parse((string)item["obsrValue"]);
+                Debug.Log("기온 : " + UniteData.temp);
             }
 
             if((string)item["category"] == "PTY") // 강수 형태(PTY) : 없음(0) / 비(1) / 비&눈(2) / 눈(3) / 빗방울(5) / 빗방울눈날림(6) / 눈날림(7)
             {
-                pty = int.Parse((string)item["obsrValue"]);
-                Debug.Log("강수 형태 : " + pty);
+                UniteData.pty = int.Parse((string)item["obsrValue"]);
+                Debug.Log("강수 형태 : " + UniteData.pty);
             }
 
             if((string)item["category"] == "REH") // 습도(REH) : %
             {
-                reh = int.Parse((string)item["obsrValue"]);
-                Debug.Log("습도 : " + reh);
+                UniteData.reh = int.Parse((string)item["obsrValue"]);
+                Debug.Log("습도 : " + UniteData.reh);
  
             }
 
             if((string)item["category"] == "WSD") // 풍속(WSD) : 바람이 약하다(~3) / 약간 강(4~8) / 강(9~13) / 매우 강(14~)
             {
-                wsd = float.Parse((string)item["obsrValue"]);
-                Debug.Log("풍속 : " + wsd);
+                UniteData.wsd = float.Parse((string)item["obsrValue"]);
+                Debug.Log("풍속 : " + UniteData.wsd);
             }
         }
 
@@ -117,38 +109,38 @@ public class WeatherGetAPI : MonoBehaviour
 
             if ((string)item["category"] == "POP") // 강수확률(POP) %
             {
-                pop = int.Parse((string)item["fcstValue"]);
-                Debug.Log("강수확률 : " + pop);
+                UniteData.pop = int.Parse((string)item["fcstValue"]);
+                Debug.Log("강수확률 : " + UniteData.pop);
             }
 
             if ((string)item["category"] == "PTY") // 강수형태(PTY) : 없음(0) / 비&눈(2) / 눈(3) / 소나기(4)
             {
-                pty = int.Parse((string)item["fcstValue"]);
-                Debug.Log("강수 형태 : " + pty);
+                UniteData.pty = int.Parse((string)item["fcstValue"]);
+                Debug.Log("강수 형태 : " + UniteData.pty);
             }
 
             if ((string)item["category"] == "WSD") // 풍속(WSD) : 바람이 약하다(~3) / 약간 강(4~8) / 강(9~13) / 매우 강(14~)
             {
-                wsd = float.Parse((string)item["fcstValue"]);
-                Debug.Log("풍속 : " + wsd);
+                UniteData.wsd = float.Parse((string)item["fcstValue"]);
+                Debug.Log("풍속 : " + UniteData.wsd);
             }
 
             if ((string)item["category"] == "SKY") // 하늘상태(SKY) : 맑음(0~5) / 구름 많음(6~8) / 흐림(9~10)
             {
-                sky = int.Parse((string)item["fcstValue"]);
-                Debug.Log("하늘 상태 : " + sky);
+                UniteData.sky = int.Parse((string)item["fcstValue"]);
+                Debug.Log("하늘 상태 : " + UniteData.sky);
             }
 
             if ((string)item["category"] == "TMN") // 일 최저기온(TMN)
             {
-                tmn = float.Parse((string)item["fcstValue"]);
-                Debug.Log("일 최저기온 : " + tmn);
+                UniteData.tmn = float.Parse((string)item["fcstValue"]);
+                Debug.Log("일 최저기온 : " + UniteData.tmn);
             }
 
             if ((string)item["category"] == "TMX") // 일 최고기온(TMX)
             {
-                tmx = float.Parse((string)item["fcstValue"]);
-                Debug.Log("일 최고기온 : " + tmx);
+                UniteData.tmx = float.Parse((string)item["fcstValue"]);
+                Debug.Log("일 최고기온 : " + UniteData.tmx);
             }
 
         }
