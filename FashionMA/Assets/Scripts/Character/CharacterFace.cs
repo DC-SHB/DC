@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 날씨에 따라 캐릭터 표정 변화 스크립트
 public class CharacterFace : MonoBehaviour
 {
     // Start is called before the first frame update
