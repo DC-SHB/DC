@@ -12,7 +12,7 @@ public class UniteData : MonoBehaviour
     // 초단기 실황 변수 
     public static float temp = 0f;// 기온(T1H)
     // 강수 형태(PTY) : 없음(0) / 비(1) / 비&눈(2) / 눈(3) / 소나기(4) / 빗방울(5) / 빗방울눈날림(6) / 눈날림(7)
-    public static int pty = 0; // (초단기 + 단기)
+    public static int pty = 1; // (초단기 + 단기)
     public static int reh = 0;  // 습도(REH) : %
     // 풍속(WSD) : 바람이 약하다(~3) / 약간 강(4~8) / 강(9~13) / 매우 강(14~)
     public static float wsd = 0; // (초단기 + 단기)
