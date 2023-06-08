@@ -408,6 +408,8 @@ MonoBehaviour:
   text_queistion: {fileID: 179998981}
   text_O: {fileID: 1168420079}
   text_X: {fileID: 264879882}
+  score: 0
+  date: 
 --- !u!1 &457763227
 GameObject:
   m_ObjectHideFlags: 0
