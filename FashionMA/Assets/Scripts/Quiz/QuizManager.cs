@@ -10,8 +10,11 @@ public class QuizManager : MonoBehaviour
 {
     [SerializeField] Text text_title;
     [SerializeField] Text text_queistion;
+    [SerializeField] Button btn_O;
+    [SerializeField] Button btn_X;
     [SerializeField] Text text_O;
     [SerializeField] Text text_X;
+    [SerializeField] Text text_check;
 
     private int QuizNum = 0;
     public int score = 0;
@@ -24,6 +27,7 @@ public class QuizManager : MonoBehaviour
         score = 0;
         date = "";
 
+        text_check.text = "";
         text_title.text = "퀴즈풀기";
         text_queistion.text = "날씨 관련 문제를 풀어볼래?";
         text_O.text = "퀴즈시작!";
@@ -65,19 +69,35 @@ public class QuizManager : MonoBehaviour
 
     private void CheckAnswer(int answer)
     {
+        btn_O.enabled = false;
+        btn_X.enabled = false;
         // 정답이면
         /*if (answer)
         {
-            score = score + 20;
-        }*/
+        text_check.text = "O";
+           StartCoroutine(ShowCheckAnswer());
+           score = score + 20;
+         }*/
+
+        // 오답이면
+        /*
+        else { 
+        text_check.text = "X";
+            StartCoroutine(ShowCheckAnswer());
+        }
+         */
         NextQuestion();
     }
 
     private void NextQuestion()
     {
         QuizNum++;
+
+        btn_O.enabled = true;
+        btn_X.enabled = true;
+
         // 모든 문제 끝
-        if(QuizNum == 6)
+        if (QuizNum == 6)
         {
             text_title.text = "";
             text_queistion.text = "축하해!\n"+ score.ToString() + "점을 받았어!";
@@ -90,6 +110,15 @@ public class QuizManager : MonoBehaviour
         }
 
         else text_title.text = QuizNum.ToString() + "번문제";
+    }
 
+    private IEnumerator ShowCheckAnswer()
+    {
+        text_check.color = new Color(text_check.color.r, text_check.color.g, text_check.color.b, 1);
+        while (text_check.color.a > 0.0f)
+        {
+            text_check.color = new Color(text_check.color.r, text_check.color.g, text_check.color.b, text_check.color.a - (Time.deltaTime / 2.0f));
+            yield return null;
+        }
     }
 }
