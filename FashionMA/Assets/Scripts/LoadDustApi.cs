@@ -10,21 +10,29 @@ public class LoadDustApi : MonoBehaviour
 
     private string jsonResult;
     private string[,] gradeResult = new string[19, 2];
+    private string getDate;
 
     void Start()
     {
+        getDate = DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
         LoadData();
     }
 
     public void InitData()
     {
         JsonData ItemData = JsonMapper.ToObject(jsonResult);
-        
-        string informCode = ItemData["response"]["body"]["items"][0]["informCode"].ToString(); //informCode, informData, informGrade, dataTime
-        string informData = ItemData["response"]["body"]["items"][0]["informData"].ToString();
-        string informGrade = ItemData["response"]["body"]["items"][0]["informGrade"].ToString();
-        string dataTime = ItemData["response"]["body"]["items"][0]["dataTime"].ToString();
-        Debug.Log(informCode);
+        string todayDate = DateTime.Now.ToString("yyyy-MM-dd");
+        string informCode="0", informData="0", informGrade="0", dataTime="0";
+        for (int i = 0; i < 10; i++)
+        {
+            //informCode = ItemData["response"]["body"]["items"][i]["informCode"].ToString(); //informCode, informData, informGrade, dataTime
+            informData = ItemData["response"]["body"]["items"][i]["informData"].ToString();
+            informGrade = ItemData["response"]["body"]["items"][i]["informGrade"].ToString();
+            dataTime = ItemData["response"]["body"]["items"][i]["dataTime"].ToString();
+
+            if (informData.Equals(todayDate)) break;
+        }
+        //Debug.Log(informCode);
         Debug.Log(informData);
         Debug.Log(informGrade);
         Debug.Log(dataTime);
@@ -62,7 +70,7 @@ public class LoadDustApi : MonoBehaviour
 
     IEnumerator GetDustData()
     {
-        string url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?serviceKey=WtsME%2FdmW6hfOBqaugjZSVpowLl%2BgVqstWO7Je8LwN62YwAC310c7eB3g20O1V7j95OPcE7Vc8B1ZRkJt7fAGg%3D%3D&returnType=json&numOfRows=5&pageNo=1&searchDate=2023-06-05&InformCode=PM10";
+        string url = "http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMinuDustFrcstDspth?serviceKey=WtsME%2FdmW6hfOBqaugjZSVpowLl%2BgVqstWO7Je8LwN62YwAC310c7eB3g20O1V7j95OPcE7Vc8B1ZRkJt7fAGg%3D%3D&returnType=json&numOfRows=10&pageNo=1&searchDate="+getDate+"&InformCode=PM10";
         UnityWebRequest www = UnityWebRequest.Get(url);
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
@@ -71,9 +79,17 @@ public class LoadDustApi : MonoBehaviour
         }
         else
         {
-            Debug.Log(www.downloadHandler.text);
+            //Debug.Log(www.downloadHandler.text);
             jsonResult = www.downloadHandler.text;
             InitData();
+        }
+    }
+
+    void Update()
+    {
+        if(!UniteData.location0.Equals("0")) { 
+            if (UniteData.location0.Equals("서울특별시")) UniteData.dust = gradeResult[0, 1];
+            if (UniteData.location0.Equals("경기도")) UniteData.dust = gradeResult[16, 1];
         }
     }
 }

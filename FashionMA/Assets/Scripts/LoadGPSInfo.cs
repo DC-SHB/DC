@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class LoadGPSInfo : MonoBehaviour
 {
-    public Text latitude_text;
-    public Text longitude_text;
-
     private float latitude = 0;
     private float longitude = 0;
     private float waitTime = 0;
@@ -34,8 +31,7 @@ public class LoadGPSInfo : MonoBehaviour
 
         if (!Input.location.isEnabledByUser)
         {
-            latitude_text.text = "GPS Off";
-            longitude_text.text = "GPS Off";
+            Debug.Log("GPS Off");
             yield break;
         }
 
@@ -49,14 +45,12 @@ public class LoadGPSInfo : MonoBehaviour
 
         if (Input.location.status == LocationServiceStatus.Failed)
         {
-            latitude_text.text = "위치 정보 수신 실패";
-            longitude_text.text = "위치 정보 수신 실패";
+            Debug.Log("위치 정보 수신 실패");
         }
 
         if (waitTime >= maxWaitTime)
         {
-            latitude_text.text = "응답 대기 시간 초과";
-            longitude_text.text = "응답 대기 시간 초과";
+            Debug.Log("응답 대기 시간 초과");
         }
 
         LocationInfo location = Input.location.lastData;
@@ -67,8 +61,11 @@ public class LoadGPSInfo : MonoBehaviour
             latitude = location.latitude * 1.0f;
             longitude = location.longitude * 1.0f;
 
-            latitude_text.text = "위도 : " + latitude.ToString();
-            longitude_text.text = "경도 : " + longitude.ToString();
+            Debug.Log("위도 : " + latitude.ToString());
+            Debug.Log("경도 : " + longitude.ToString());
+
+            UniteData.latitude = latitude;
+            UniteData.longitude = longitude;
 
             yield return new WaitForSeconds(resendTime);
         }

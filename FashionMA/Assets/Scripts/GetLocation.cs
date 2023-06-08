@@ -7,18 +7,20 @@ using LitJson;
 public class GetLocation : MonoBehaviour
 {
     private string strBaseURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc";
-    public string latitude = "";
-    public string longitude = "";
+    private string latitude = "";
+    private string longitude = "";
     private string strAPIKey = "9o2m6mrc31";
     private string secretKey = "Q83Y9IqLhwkd0sxMZQWySb8c8CgCHUcVNHtmJXKh";
 
     private string jsonResult;
     private string[] locationResult = new string[3];
 
+    private bool GPS;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(MapLoader());
+        
     }
 
     public void InitData()
@@ -28,6 +30,10 @@ public class GetLocation : MonoBehaviour
         locationResult[0] = ItemData["results"][0]["region"]["area1"]["name"].ToString();
         locationResult[1] = ItemData["results"][0]["region"]["area2"]["name"].ToString();
         locationResult[2] = ItemData["results"][0]["region"]["area3"]["name"].ToString();
+
+        UniteData.location0 = locationResult[0];
+        UniteData.location1 = locationResult[1];
+        UniteData.location2 = locationResult[2];
 
         //for (int i=0; i< locationResult.Length; i++)
         //{
@@ -52,6 +58,22 @@ public class GetLocation : MonoBehaviour
             //Debug.Log(www.downloadHandler.text);
             jsonResult = www.downloadHandler.text;
             InitData();
+        }
+    }
+
+    void Update()
+    {
+        if (UniteData.longitude != 0 && UniteData.latitude != 0)
+        {
+            GPS = true;
+        }
+
+        if(GPS)
+        {
+            latitude = UniteData.latitude.ToString();
+            longitude = UniteData.longitude.ToString();
+            StartCoroutine(MapLoader());
+            GPS = false;
         }
     }
 }
