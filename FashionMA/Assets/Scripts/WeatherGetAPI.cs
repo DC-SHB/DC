@@ -16,13 +16,13 @@ public class WeatherGetAPI : MonoBehaviour
     private string dataType = "JSON";
     string jsonResult;
 
-    private int base_data = 20230607;
+    private int base_data = 20230608;
     private int base_time = 1400;
     private int nx = 60;
     private int ny = 127;
     
 
-    void Start()
+    void Awake()
     {
         StartCoroutine(GetWeatherData());
     }

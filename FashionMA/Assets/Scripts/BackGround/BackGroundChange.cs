@@ -13,6 +13,9 @@ public class BackGroundChange : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // 초 단기 실황 호출
+        UniteData.forecastTypeNum = 0;
+
         for(int i =0; i < particles.Length; i++)
         {
             particles[i].gameObject.SetActive(false);

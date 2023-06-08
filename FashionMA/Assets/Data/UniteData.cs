@@ -7,7 +7,7 @@ public class UniteData : MonoBehaviour
     // 날씨 관련 데이터
 
     // 선택할 예보 - 초단기 실황(0) , 단기 예보(1)
-    public static int forecastTypeNum = 1;
+    public static int forecastTypeNum = 0;
 
     // 초단기 실황 변수 
     public static float temp = 0f;// 기온(T1H)
