@@ -20,7 +20,6 @@ public class GotoMain : MonoBehaviour
 
     public void BtnGotoMain()
     {
-        Debug.Log("123");
         SceneManager.LoadScene("Main");
     }
 }
