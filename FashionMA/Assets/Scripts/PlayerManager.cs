@@ -8,15 +8,12 @@ using Photon.Realtime;
 public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
 {
     public PhotonView myView;
-    public TMPro.TMP_Text myNick;
-    public SpriteRenderer spriteRenderer;
-    public Rigidbody2D myRigid;
-    public Animator myAnim;
+    public Text myNick;
     public float speed = 2.0f;
     public GameObject ChatBox;
-    public TMPro.TMP_Text ChatBox_Text;
-    public GameObject MainChatPanel;
-    public InputField Chat_Input;
+    public Text ChatBox_Text;
+    private GameObject MainChatPanel;
+    private InputField Chat_Input;
 
     private void Awake()
     {
@@ -31,26 +28,16 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
             myNick.color = Color.red;
         }
 
-        MainChatPanel = GameObject.Find("MainCanvas").transform.GetChild(1).gameObject;
-        Chat_Input = MainChatPanel.transform.GetChild(1).GetComponent<InputField>();
+        MainChatPanel = GameObject.Find("Canvas").transform.GetChild(1).gameObject;
+        Chat_Input = MainChatPanel.transform.GetChild(0).GetComponent<InputField>();
     }
-
-
-
 
     private void Update()
     {
         if (photonView.IsMine && !MainChatPanel.activeSelf)
         {
             float x = Input.GetAxisRaw("Horizontal");
-            myRigid.velocity = new Vector2(4 * x, myRigid.velocity.y);
-
-            if (x != 0)
-            {
-                myAnim.SetBool("Run", true);
-                myView.RPC("FlipX", RpcTarget.AllBuffered, x);
-            }
-            else myAnim.SetBool("Run", false);
+            transform.Translate(-x * Time.deltaTime, 0, 0);
         }
 
 
@@ -65,16 +52,13 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
                     Chat_Input.text = "";
                     StopAllCoroutines();
                     StartCoroutine(DelayCloseChatBox(3.0f));
-
                 }
-
             }
             else
             {
                 MainChatPanel.SetActive(true);
                 Chat_Input.ActivateInputField();
             }
-
         }
     }
 
@@ -97,10 +81,6 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         ChatBox.SetActive(false);
 
     }
-
-    [PunRPC]
-    public void FlipX(float x) => spriteRenderer.flipX = x == -1;
-
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {

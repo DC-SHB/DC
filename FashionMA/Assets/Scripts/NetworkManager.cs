@@ -15,7 +15,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        Screen.SetResolution(960, 540, false); //창모드
         PhotonNetwork.SendRate = 60;
         PhotonNetwork.SerializationRate = 30;
     }
@@ -36,7 +35,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        if (PhotonNetwork.CountOfRooms == 0) PhotonNetwork.CreateRoom("1대1뜨실분");
+        if (PhotonNetwork.CountOfRooms == 0) PhotonNetwork.CreateRoom("room1");
         else PhotonNetwork.JoinRandomRoom();
 
     }
@@ -44,7 +43,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         loginPanel.SetActive(false);
-        PhotonNetwork.Instantiate("MobileMaleFree1", Vector2.zero, Quaternion.identity);
+        Vector3 pos = new Vector3(0, -4.3f, -8.56f);
+        Quaternion lot = Quaternion.identity;
+        lot.eulerAngles = new Vector3(0, 180, 0);
+        PhotonNetwork.Instantiate("MobileMaleFree1", pos, lot);
     }
 
     public void ClickBtn()
@@ -54,7 +56,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.NickName = nicknameInput.text;
             PhotonNetwork.JoinLobby();
         }
-        else titleText.text = "닉네임은 2글자 이상!";
     }
 
     private void Update()
