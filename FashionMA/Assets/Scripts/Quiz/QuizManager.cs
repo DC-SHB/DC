@@ -28,12 +28,12 @@ public class QuizManager : MonoBehaviour
     private void Awake()
     {
         data = CSVReader.Read("Questions");
-        for (var i = 0; i < data.Count; i++)
+        /*for (var i = 0; i < data.Count; i++)
         {
             Debug.Log("Num " + data[i]["Num"] + " " +
                    "Question " + data[i]["Question"] + " " +
                    "Answer " + data[i]["Answer"]);
-        }
+        }*/
 
         rand = UniqueRandom(5, 0, 9);
 
