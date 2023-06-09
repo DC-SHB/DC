@@ -34,5 +34,54 @@ public class UniteData : MonoBehaviour
 
     //미세먼지
     public static string dust = "0";
-    
+
+
+    // 유저 데이터 관련
+    public static int maxEntries = 8; // 최대 엔트리 개수
+    public static string[] logDate = new string[maxEntries]; // 날짜 배열
+    public static int[] logScore = new int[maxEntries]; // 점수 배열
+
+    public static void SaveUserData()
+    {
+        // 리더보드 데이터 저장
+        string scoreString = string.Join(",", logScore);
+        string dateString = string.Join(",", logDate);
+
+        PlayerPrefs.SetString("LeaderboardScores", scoreString);
+        PlayerPrefs.SetString("LeaderboardDates", dateString);
+
+        PlayerPrefs.Save();
+    }
+
+    public static void ResetUserData()
+    {
+        maxEntries = 8;
+        logDate = new string[maxEntries];
+        logScore = new int[maxEntries];
+
+        SaveUserData();
+        Debug.Log("유저 데이터 초기화");
+    }
+
+    public static void LoadLeaderboard()
+    {
+        // 기존 데이터 로드
+        string scoreString = PlayerPrefs.GetString("LeaderboardScores", string.Empty);
+        string dateString = PlayerPrefs.GetString("LeaderboardDates", string.Empty);
+
+        if (!string.IsNullOrEmpty(scoreString) && !string.IsNullOrEmpty(dateString))
+        {
+            string[] scoreArray = scoreString.Split(',');
+            string[] dateArray = dateString.Split(',');
+
+            if (scoreArray.Length == UniteData.maxEntries && dateArray.Length == UniteData.maxEntries)
+            {
+                for (int i = 0; i < UniteData.maxEntries; i++)
+                {
+                    UniteData.logScore[i] = int.Parse(scoreArray[i]);
+                    UniteData.logDate[i] = dateArray[i];
+                }
+            }
+        }
+    }
 }

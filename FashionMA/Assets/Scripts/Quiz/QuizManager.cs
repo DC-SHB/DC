@@ -18,8 +18,8 @@ public class QuizManager : MonoBehaviour
     [SerializeField] Text text_check;
 
     private int QuizNum = 0;
-    public int score = 0;
-    public string date = "";
+    private int score = 0;
+    private string date = "";
 
     private int[] rand = { 0, 0, 0, 0, 0 };
 
@@ -41,6 +41,8 @@ public class QuizManager : MonoBehaviour
         {
             Debug.Log("rand[i] : " + rand[i]);
         }
+
+        UniteData.LoadLeaderboard();
     }
 
     // Start is called before the first frame update
@@ -126,7 +128,7 @@ public class QuizManager : MonoBehaviour
 
             // 현재 시간 및 점수 기록
             date = DateTime.Now.ToString(("yyyy.MM.dd HH:mm"));
-            Debug.Log(date);
+            AddEntry(score, date);
         }
 
         else
@@ -181,4 +183,71 @@ public class QuizManager : MonoBehaviour
 
         return rand;
     }
+
+    private void AddEntry(int score, string date)
+    {
+        // 배열이 꽉 찬 경우 기존 값보다 점수가 클 때만 추가
+        if (UniteData.logScore.Length >= UniteData.maxEntries)
+        {
+            if (UniteData.logScore[UniteData.maxEntries - 1] < score)
+            {
+                // 새로운 값 추가
+                UniteData.logScore[UniteData.maxEntries - 1] = score;
+                UniteData.logDate[UniteData.maxEntries - 1] = date;
+
+                // 값 정렬
+                SortLeaderboard();
+
+                UniteData.SaveUserData();
+            }
+        }
+
+        else
+        {
+            // 새로운 값 추가
+            UniteData.logScore[UniteData.maxEntries - 1] = score;
+            UniteData.logDate[UniteData.maxEntries - 1] = date;
+
+            // 값 정렬
+            SortLeaderboard();
+
+            UniteData.SaveUserData();
+        }
+    }
+    private void SortLeaderboard()
+    {
+        for (int i = UniteData.maxEntries - 1; i > 0; i--)
+        {
+            // 새로운 값과 비교
+            if (UniteData.logScore[i] > UniteData.logScore[i - 1])
+            {
+                // 점수가 더 큰 경우 값 교환
+                SwapValues(i, i - 1);
+            }
+            else if (UniteData.logScore[i] == UniteData.logScore[i - 1])
+            {
+                // 점수가 같은 경우 날짜 비교
+                DateTime currentDate = DateTime.Parse(UniteData.logDate[i]);
+                DateTime previousDate = DateTime.Parse(UniteData.logDate[i - 1]);
+
+                if (currentDate < previousDate)
+                {
+                    // 날짜가 더 작은 경우 값 교환
+                    SwapValues(i, i - 1);
+                }
+            }
+        }
+    }
+
+    private void SwapValues(int index1, int index2)
+    {
+        int tempScore = UniteData.logScore[index1];
+        UniteData.logScore[index1] = UniteData.logScore[index2];
+        UniteData.logScore[index2] = tempScore;
+
+        string tempDate = UniteData.logDate[index1];
+        UniteData.logDate[index1] = UniteData.logDate[index2];
+        UniteData.logDate[index2] = tempDate;
+    }
 }
+
