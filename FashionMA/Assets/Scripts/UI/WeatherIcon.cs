@@ -22,6 +22,7 @@ public class WeatherIcon : MonoBehaviour
 
     private void ChangeWeatherUI()
     {
+        Debug.Log("pty : " + UniteData.pty);
         // °­¼ö ÇüÅÂ(PTY) : ¾øÀ½(0) / ºñ(1) / ºñ&´«(2) / ´«(3) / ¼Ò³ª±â(4) / ºø¹æ¿ï(5) / ºø¹æ¿ï´«³¯¸²(6) / ´«³¯¸²(7)
         if (UniteData.pty == 0)
         {
