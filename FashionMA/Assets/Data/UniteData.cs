@@ -24,8 +24,8 @@ public class UniteData : MonoBehaviour
     public static float tmx = 0f; // 일 최고기온(TMX)
 
     //위도, 경도
-    public static float latitude = 0f;
-    public static float longitude = 0f;
+    public static float latitude = 37.5863f;
+    public static float longitude = 127.02f;
 
     //위치
     public static string location0 = "0";

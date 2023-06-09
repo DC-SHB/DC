@@ -20,26 +20,38 @@ public class WeatherGetAPI : MonoBehaviour
 
     Dictionary<string, float> result;
 
-
     private int base_date;
     private int base_time;
-    private int base_time_hh;
-    private int base_time_mm;
+    private string base_time_s;
 
     private float nx;
     private float ny;
 
     void Awake()
     {
-        base_date = int.Parse(DateTime.Now.ToString("yyyyMMdd"));
-        base_time_hh = int.Parse(DateTime.Now.ToString("HH"));
-        base_time_mm = int.Parse(DateTime.Now.ToString("mm"));
+        // 현재 시간 구하기
+        DateTime currentTime = DateTime.Now;
 
-        if (base_time_mm <= 30)
-        {// 해당 시각 발표 전에는 자료가 없어서 이전 시각을 기준으로 
-            base_time_hh -= 1;
+        int baseHour = currentTime.Hour;
+
+        if (currentTime.Minute < 40)
+        {
+            if(currentTime.Hour == 0) baseHour = 23;
+            else baseHour = currentTime.Hour - 1;
         }
-        base_time = int.Parse(base_time_hh.ToString() + "00");
+
+
+        // 기상청 API에 사용할 base_date와 base_time 설정
+        base_date = int.Parse(currentTime.ToString("yyyyMMdd"));
+        base_time = baseHour * 100;
+        if(base_time < 1000)
+        {
+            base_time_s = "0" + base_time.ToString();
+        }
+        else
+        {
+            base_time_s = base_time.ToString();
+        }
 
         result = dfs_xy_conf(UniteData.latitude, UniteData.longitude);
         nx = result["x"];
@@ -52,18 +64,19 @@ public class WeatherGetAPI : MonoBehaviour
     IEnumerator GetWeatherData()
     {
         // 기본값 지정
-        Debug.Log("data : " + base_date + "time " + base_time);
-        string apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time}&nx={nx}&ny={ny}";
+        Debug.Log("data : " + base_date + " time " + base_time_s);
+        string apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time_s}&nx={nx}&ny={ny}";
+        //Debug.Log(apiUrl);
 
         if (UniteData.forecastTypeNum == 0)  // 초단기 실황
         {
-            apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time}&nx={nx}&ny={ny}";
+            apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time_s}&nx={nx}&ny={ny}";
         }
         else if(UniteData.forecastTypeNum == 1) // 단기 예보
         {
-            apiUrl = $"{forecastUrl_VilageFcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time}&nx={nx}&ny={ny}";
+            apiUrl = $"{forecastUrl_VilageFcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time_s}&nx={nx}&ny={ny}";
         }
-        
+
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
         {
             yield return webRequest.SendWebRequest();
