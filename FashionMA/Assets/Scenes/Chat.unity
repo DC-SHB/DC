@@ -711,7 +711,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27, y: 14.9}
+  m_AnchoredPosition: {x: 27, y: -20.42}
   m_SizeDelta: {x: 682.1, y: 116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1063827719
@@ -917,6 +917,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1136902105
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1509,7 +1510,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.4, y: 230}
+  m_AnchoredPosition: {x: -2.4, y: 248.8}
   m_SizeDelta: {x: 884.2, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1526528359
@@ -1669,7 +1670,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27, y: 14.9}
+  m_AnchoredPosition: {x: 27, y: -20.42}
   m_SizeDelta: {x: 682.1, y: 116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1593699413
@@ -1925,9 +1926,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleText: {fileID: 1449038049}
   nicknameInput: {fileID: 1259362618}
-  loginPanel: {fileID: 1136902104}
-  beforeConnect: {fileID: 2091530521}
-  afterConnect: {fileID: 1136902104}
+  ready: {fileID: 2091530521}
+  nicknamePanel: {fileID: 1136902104}
 --- !u!4 &1896747394
 Transform:
   m_ObjectHideFlags: 0
