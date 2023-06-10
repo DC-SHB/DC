@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 69772299}
   - component: {fileID: 69772298}
   - component: {fileID: 69772297}
+  - component: {fileID: 69772300}
   m_Layer: 5
   m_Name: RightMenu
   m_TagString: Untagged
@@ -415,7 +416,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 69772298}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 69772300}
+        m_TargetAssemblyTypeName: GoToChat, Assembly-CSharp
+        m_MethodName: BtnGotoChat
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &69772298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,6 +467,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69772295}
   m_CullTransparentMesh: 1
+--- !u!114 &69772300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69772295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b74aba9ccac4f34c971092603262013, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &113573809
 GameObject:
   m_ObjectHideFlags: 0
@@ -11688,7 +11713,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807867059}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -538.58, y: -1197.8301, z: 0}
+  m_LocalPosition: {x: 1.4199829, y: 2.1699219, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -11697,8 +11722,8 @@ Transform:
   - {fileID: 503230659}
   - {fileID: 583342717}
   - {fileID: 1340022070}
-  m_Father: {fileID: 1847286408}
-  m_RootOrder: 5
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &876063901
 GameObject:
@@ -18897,7 +18922,6 @@ RectTransform:
   - {fileID: 66536181}
   - {fileID: 1865297805}
   - {fileID: 2002886816}
-  - {fileID: 807867060}
   m_Father: {fileID: 1142513695}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -18941,7 +18965,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 101, y: 935}
+  m_AnchoredPosition: {x: 442.4, y: 935}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1865297806
@@ -18971,7 +18995,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 63
-    m_Alignment: 0
+    m_Alignment: 2
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 1

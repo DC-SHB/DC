@@ -90,6 +90,7 @@ public class LoadDustApi : MonoBehaviour
         if(!UniteData.location0.Equals("0")) { 
             if (UniteData.location0.Equals("서울특별시")) UniteData.dust = gradeResult[0, 1];
             if (UniteData.location0.Equals("경기도")) UniteData.dust = gradeResult[16, 1];
+            if (UniteData.location0.Equals("강원도")) UniteData.dust = gradeResult[14, 1];
         }
     }
 }

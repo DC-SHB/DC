@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: f1afe8b45d0022e4baf667d9e1966df2
+  - enabled: 1
     path: Assets/Scenes/Chat.unity
     guid: 832239e1591c46a4bba7002b5e4066be
   - enabled: 1
@@ -17,9 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/QuizScore.unity
     guid: 1c058cff743956c49afdb2b761b26000
-  - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: f1afe8b45d0022e4baf667d9e1966df2
   - enabled: 1
     path: Assets/Scenes/Quiz.unity
     guid: 4deaa1aa6ee9b3541b54c68a8255e30c
