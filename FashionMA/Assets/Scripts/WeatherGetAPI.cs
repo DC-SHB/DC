@@ -10,19 +10,12 @@ using Unity.VisualScripting;
 // 기상청 API를 JSON으로 받아와 LitJson을 이용하여 파싱하는 스크립트
 public class WeatherGetAPI : MonoBehaviour
 {
-    private string apiKey = "6c3v2vDyMl1%2BDCT98Ui1wMalyBfWpEdxTlC2grEFi4OTZWfB82Xkg1zQvlS37wyNaXxw4T4y1Ap2p7klKbJtdg%3D%3D";
-
-    private string forecastUrl_srtNcst = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"; // 초단기 실황 - getUltraSrtNcst
-    private string forecastUrl_VilageFcst = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"; // 단기 예보 - getVilageFcst
-
     private string dataType = "JSON";
     string jsonResult;
 
     Dictionary<string, float> result;
 
-    private int base_date;
     private int base_time;
-    private string base_time_s;
 
     private float nx;
     private float ny;
@@ -42,15 +35,15 @@ public class WeatherGetAPI : MonoBehaviour
 
 
         // 기상청 API에 사용할 base_date와 base_time 설정
-        base_date = int.Parse(currentTime.ToString("yyyyMMdd"));
+        UniteData.base_date = int.Parse(currentTime.ToString("yyyyMMdd"));
         base_time = baseHour * 100;
         if(base_time < 1000)
         {
-            base_time_s = "0" + base_time.ToString();
+            UniteData.base_time_s = "0" + base_time.ToString();
         }
         else
         {
-            base_time_s = base_time.ToString();
+            UniteData.base_time_s = base_time.ToString();
         }
 
         result = dfs_xy_conf(UniteData.latitude, UniteData.longitude);
@@ -64,17 +57,17 @@ public class WeatherGetAPI : MonoBehaviour
     IEnumerator GetWeatherData()
     {
         // 기본값 지정
-        Debug.Log("data : " + base_date + " time " + base_time_s);
-        string apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time_s}&nx={nx}&ny={ny}";
+        Debug.Log("data : " + UniteData.base_date + " time " + UniteData.base_time_s);
+        string apiUrl = $"{UniteData.forecastUrl_srtNcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&base_date={UniteData.base_date}&base_time={UniteData.base_time_s}&nx={nx}&ny={ny}";
         //Debug.Log(apiUrl);
 
         if (UniteData.forecastTypeNum == 0)  // 초단기 실황
         {
-            apiUrl = $"{forecastUrl_srtNcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time_s}&nx={nx}&ny={ny}";
+            apiUrl = $"{UniteData.forecastUrl_srtNcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&base_date={UniteData.base_date}&base_time={UniteData.base_time_s}&nx={nx}&ny={ny}";
         }
         else if(UniteData.forecastTypeNum == 1) // 단기 예보
         {
-            apiUrl = $"{forecastUrl_VilageFcst}?serviceKey={apiKey}&dataType={dataType}&base_date={base_date}&base_time={base_time_s}&nx={nx}&ny={ny}";
+            apiUrl = $"{UniteData.forecastUrl_VilageFcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&base_date={UniteData.base_date}&base_time={UniteData.base_time_s}&nx={nx}&ny={ny}";
         }
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
