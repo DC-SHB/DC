@@ -5,9 +5,16 @@ using UnityEngine;
 public class UniteData : MonoBehaviour
 {
     // 날씨 관련 데이터
+    public static int base_date;
+    public static string base_time_s;
+    
+    public static string apiKey = "6c3v2vDyMl1%2BDCT98Ui1wMalyBfWpEdxTlC2grEFi4OTZWfB82Xkg1zQvlS37wyNaXxw4T4y1Ap2p7klKbJtdg%3D%3D";
+    public static string forecastUrl_srtNcst = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"; // 초단기 실황 - getUltraSrtNcst
+    public static string forecastUrl_VilageFcst = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"; // 단기 예보 - getVilageFcst
+
 
     // 선택할 예보 - 초단기 실황(0) , 단기 예보(1)
-    public static int forecastTypeNum = 0;
+    public static int forecastTypeNum = 1;
 
     // 초단기 실황 변수 
     public static float temp = 0f;// 기온(T1H)
