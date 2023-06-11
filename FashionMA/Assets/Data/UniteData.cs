@@ -14,7 +14,7 @@ public class UniteData : MonoBehaviour
 
 
     // 선택할 예보 - 초단기 실황(0) , 단기 예보(1)
-    public static int forecastTypeNum = 1;
+    public static int forecastTypeNum = 0;
 
     // 초단기 실황 변수 
     public static float temp = 0f;// 기온(T1H)
@@ -33,8 +33,8 @@ public class UniteData : MonoBehaviour
     public static string[, ] todayWeather = new string[24, 14]; //0 : 시간, 1 : POP, PTY, PCP, REH, SNO, SKY, TMP, UUU, VVV, WAV, VEC, WSD
 
     //위도, 경도
-    public static float latitude = 0f;
-    public static float longitude = 0;
+    public static float latitude = 37.5863f;
+    public static float longitude = 127.02f;
 
     //위치
     public static string location0 = "0";
