@@ -68,7 +68,7 @@ public class WeatherGetAPI : MonoBehaviour
         }
         else if(UniteData.forecastTypeNum == 1) // 단기 예보
         {
-            apiUrl = $"{forecastUrl_VilageFcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&numOfRows=108&pageNo=1&base_date={UniteData.base_date}&base_time={UniteData.base_time_s}&nx={nx}&ny={ny}";
+            apiUrl = $"{UniteData.forecastUrl_VilageFcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&numOfRows=108&pageNo=1&base_date={UniteData.base_date}&base_time={UniteData.base_time_s}&nx={nx}&ny={ny}";
         }
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
