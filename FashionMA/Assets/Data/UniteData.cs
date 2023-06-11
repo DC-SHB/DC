@@ -30,9 +30,11 @@ public class UniteData : MonoBehaviour
     public static float tmn = 0f; // 일 최저기온(TMN)
     public static float tmx = 0f; // 일 최고기온(TMX)
 
+    public static string[, ] todayWeather = new string[24, 14]; //0 : 시간, 1 : POP, PTY, PCP, REH, SNO, SKY, TMP, UUU, VVV, WAV, VEC, WSD
+
     //위도, 경도
-    public static float latitude = 37.5863f;
-    public static float longitude = 127.02f;
+    public static float latitude = 0f;
+    public static float longitude = 0;
 
     //위치
     public static string location0 = "0";

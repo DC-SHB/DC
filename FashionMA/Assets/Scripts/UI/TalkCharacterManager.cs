@@ -76,4 +76,9 @@ public class TalkCharacterManager : MonoBehaviour
 
         nextBtn.SetActive(false);
     }
+
+    public void BtnTodayWeather()
+    {
+
+    }
 }
