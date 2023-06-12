@@ -9,8 +9,11 @@ public class GetLocation : MonoBehaviour
     private string strBaseURL = "https://naveropenapi.apigw.ntruss.com/map-reversegeocode/v2/gc";
     private string latitude = "";
     private string longitude = "";
-    private string strAPIKey = "9o2m6mrc31";
-    private string secretKey = "Q83Y9IqLhwkd0sxMZQWySb8c8CgCHUcVNHtmJXKh";
+    //private string strAPIKey = "9o2m6mrc31"; // ¼öºó ¹öÀü
+    //private string secretKey = "Q83Y9IqLhwkd0sxMZQWySb8c8CgCHUcVNHtmJXKh"; // ¼öºó ¹öÀü
+
+    private string strAPIKey = "9c8xrvrje8";
+    private string secretKey = "52B3CtkMAik44AGUOhIJUyPdAMptXz9hvzlVnmBB";
 
     private string jsonResult;
     private string[] locationResult = new string[3];
