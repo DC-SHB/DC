@@ -33,8 +33,8 @@ public class UniteData : MonoBehaviour
     public static string[, ] todayWeather = new string[24, 14]; //0 : 시간, 1 : POP, PTY, PCP, REH, SNO, SKY, TMP, UUU, VVV, WAV, VEC, WSD
 
     //위도, 경도
-    public static float latitude = 37.5863f;
-    public static float longitude = 127.02f;
+    public static float latitude = 0;
+    public static float longitude = 0;
 
     //위치
     public static string location0 = "0";
