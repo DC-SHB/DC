@@ -68,7 +68,8 @@ public class WeatherGetAPI : MonoBehaviour
         }
         else if(UniteData.forecastTypeNum == 1) // 단기 예보
         {
-            apiUrl = $"{UniteData.forecastUrl_VilageFcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&numOfRows=108&pageNo=1&base_date={UniteData.base_date}&base_time={UniteData.base_time_s}&nx={nx}&ny={ny}";
+            MakeBaseTime();
+            apiUrl = $"{UniteData.forecastUrl_VilageFcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&numOfRows=108&pageNo=1&base_date={UniteData.base_date}&base_time={UniteData.base_time2}&nx={nx}&ny={ny}";
         }
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
@@ -78,6 +79,7 @@ public class WeatherGetAPI : MonoBehaviour
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
                 jsonResult = webRequest.downloadHandler.text;
+                //UniteData.forecastTypeNum = 1;
                 if (UniteData.forecastTypeNum == 0) InitDataGetUltraSrtNcst(jsonResult);
                 else if (UniteData.forecastTypeNum == 1) InitDataGetVilageFcst(jsonResult);
                 //Debug.Log(jsonResult);
@@ -126,6 +128,20 @@ public class WeatherGetAPI : MonoBehaviour
             }
         }
 
+    }
+
+    public void MakeBaseTime()
+    {
+        int time = DateTime.Now.Hour * 100 + DateTime.Now.Minute;
+        if (time > 210) UniteData.base_time2 = "0200";
+        if (time > 510) UniteData.base_time2 = "0500";
+        if (time > 810) UniteData.base_time2 = "0800";
+        if (time > 1110) UniteData.base_time2 = "1100";
+        if (time > 1410) UniteData.base_time2 = "1400";
+        if (time > 1710) UniteData.base_time2 = "1700";
+        if (time > 2010) UniteData.base_time2 = "2000";
+        if (time > 2310 || time <= 210) UniteData.base_time2 = "2300";
+        Debug.Log(UniteData.base_time2);
     }
 
     // 단기 예보를 출력할 경우
