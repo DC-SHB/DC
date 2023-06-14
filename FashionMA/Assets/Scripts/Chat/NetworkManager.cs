@@ -12,6 +12,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public InputField nicknameInput;
     public GameObject ready;
     public GameObject nicknamePanel;
+    public GameObject afterConnectBtn;
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         Quaternion lot = Quaternion.identity;
         lot.eulerAngles = new Vector3(0, 180, 0);
         PhotonNetwork.Instantiate("MobileMaleFree1", pos, lot);
+        afterConnectBtn.SetActive(true);
     }
 
     public void ClickBtn()
