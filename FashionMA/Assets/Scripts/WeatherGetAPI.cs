@@ -11,7 +11,7 @@ using Unity.VisualScripting;
 public class WeatherGetAPI : MonoBehaviour
 {
     private string dataType = "JSON";
-    string jsonResult;
+    string jsonResult, jsonTodayResult;
 
     Dictionary<string, float> result;
 
@@ -34,7 +34,6 @@ public class WeatherGetAPI : MonoBehaviour
             else baseHour = currentTime.Hour - 1;
         }
 
-
         // 기상청 API에 사용할 base_date와 base_time 설정
         UniteData.base_date = int.Parse(currentTime.ToString("yyyyMMdd"));
         base_time = baseHour * 100;
@@ -53,6 +52,7 @@ public class WeatherGetAPI : MonoBehaviour
 
         Debug.Log("x : " + nx + " y : " + ny);
         StartCoroutine(GetWeatherData());
+        StartCoroutine(GetTodayWeatherData());
     }
 
     IEnumerator GetWeatherData()
@@ -61,15 +61,14 @@ public class WeatherGetAPI : MonoBehaviour
         Debug.Log("data : " + UniteData.base_date + " time " + UniteData.base_time_s);
         string apiUrl = $"{UniteData.forecastUrl_srtNcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&base_date={UniteData.base_date}&base_time={UniteData.base_time_s}&nx={nx}&ny={ny}";
         //Debug.Log(apiUrl);
-
         if (UniteData.forecastTypeNum == 0)  // 초단기 실황
         {
             apiUrl = $"{UniteData.forecastUrl_srtNcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&base_date={UniteData.base_date}&base_time={UniteData.base_time_s}&nx={nx}&ny={ny}";
         }
         else if(UniteData.forecastTypeNum == 1) // 단기 예보
         {
-            MakeBaseTime();
-            apiUrl = $"{UniteData.forecastUrl_VilageFcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&numOfRows=108&pageNo=1&base_date={UniteData.base_date}&base_time={UniteData.base_time2}&nx={nx}&ny={ny}";
+            //MakeBaseTime();
+            apiUrl = $"{UniteData.forecastUrl_VilageFcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&numOfRows=290&pageNo=1&base_date={UniteData.base_date}&base_time=0200&nx={nx}&ny={ny}";
         }
 
         using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
@@ -79,7 +78,6 @@ public class WeatherGetAPI : MonoBehaviour
             if (webRequest.result == UnityWebRequest.Result.Success)
             {
                 jsonResult = webRequest.downloadHandler.text;
-                //UniteData.forecastTypeNum = 1;
                 if (UniteData.forecastTypeNum == 0) InitDataGetUltraSrtNcst(jsonResult);
                 else if (UniteData.forecastTypeNum == 1) InitDataGetVilageFcst(jsonResult);
                 //Debug.Log(jsonResult);
@@ -90,6 +88,27 @@ public class WeatherGetAPI : MonoBehaviour
             }
         }
         Debug.Log("날씨 API 설정 완료");
+    }
+
+    IEnumerator GetTodayWeatherData()
+    {
+        string apiUrl = $"{UniteData.forecastUrl_VilageFcst}?serviceKey={UniteData.apiKey}&dataType={dataType}&numOfRows=290&pageNo=1&base_date={UniteData.base_date}&base_time=0200&nx={nx}&ny={ny}";
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(apiUrl))
+        {
+            yield return webRequest.SendWebRequest();
+
+            if (webRequest.result == UnityWebRequest.Result.Success)
+            {
+                jsonTodayResult = webRequest.downloadHandler.text;
+                InitDataGetVilageFcst(jsonTodayResult);
+                //Debug.Log(jsonResult);
+            }
+            else
+            {
+                Debug.LogError($"Error: {webRequest.error}");
+            }
+        }
+        Debug.Log("단기 예보 API 설정 완료");
     }
 
     // 초단기 실황을 출력할 경우
@@ -130,72 +149,23 @@ public class WeatherGetAPI : MonoBehaviour
 
     }
 
-    public void MakeBaseTime()
-    {
-        int time = DateTime.Now.Hour * 100 + DateTime.Now.Minute;
-        if (time > 210) UniteData.base_time2 = "0200";
-        if (time > 510) UniteData.base_time2 = "0500";
-        if (time > 810) UniteData.base_time2 = "0800";
-        if (time > 1110) UniteData.base_time2 = "1100";
-        if (time > 1410) UniteData.base_time2 = "1400";
-        if (time > 1710) UniteData.base_time2 = "1700";
-        if (time > 2010) UniteData.base_time2 = "2000";
-        if (time > 2310 || time <= 210) UniteData.base_time2 = "2300";
-        Debug.Log(UniteData.base_time2);
-    }
-
-    // 단기 예보를 출력할 경우
-    //public void InitDataGetVilageFcst(string jsonResult)
+    //public void MakeBaseTime()
     //{
-    //    JsonData ItemData = JsonMapper.ToObject(jsonResult);
-    //    JsonData items = ItemData["response"]["body"]["items"]["item"];
-    //
-    //    for (int i = 0; i < items.Count; i++)
-    //    {
-    //        JsonData item = items[i];
-    //
-    //        if ((string)item["category"] == "POP") // 강수확률(POP) %
-    //        {
-    //            UniteData.pop = int.Parse((string)item["fcstValue"]);
-    //            Debug.Log("강수확률 : " + UniteData.pop);
-    //        }
-    //
-    //        if ((string)item["category"] == "PTY") // 강수형태(PTY) : 없음(0) / 비&눈(2) / 눈(3) / 소나기(4)
-    //        {
-    //            UniteData.pty = int.Parse((string)item["fcstValue"]);
-    //            Debug.Log("강수 형태 : " + UniteData.pty);
-    //        }
-    //
-    //        if ((string)item["category"] == "WSD") // 풍속(WSD) : 바람이 약하다(~3) / 약간 강(4~8) / 강(9~13) / 매우 강(14~)
-    //        {
-    //            UniteData.wsd = float.Parse((string)item["fcstValue"]);
-    //            Debug.Log("풍속 : " + UniteData.wsd);
-    //        }
-    //
-    //        if ((string)item["category"] == "SKY") // 하늘상태(SKY) : 맑음(0~5) / 구름 많음(6~8) / 흐림(9~10)
-    //        {
-    //            UniteData.sky = int.Parse((string)item["fcstValue"]);
-    //            Debug.Log("하늘 상태 : " + UniteData.sky);
-    //        }
-    //
-    //        if ((string)item["category"] == "TMN") // 일 최저기온(TMN)
-    //        {
-    //            UniteData.tmn = float.Parse((string)item["fcstValue"]);
-    //            Debug.Log("일 최저기온 : " + UniteData.tmn);
-    //        }
-    //
-    //        if ((string)item["category"] == "TMX") // 일 최고기온(TMX)
-    //        {
-    //            UniteData.tmx = float.Parse((string)item["fcstValue"]);
-    //            Debug.Log("일 최고기온 : " + UniteData.tmx);
-    //        }
-    //
-    //    }
-    //
+    //    int time = DateTime.Now.Hour * 100 + DateTime.Now.Minute;
+    //    if (time > 210) UniteData.base_time2 = "0200";
+    //    if (time > 510) UniteData.base_time2 = "0500";
+    //    if (time > 810) UniteData.base_time2 = "0800";
+    //    if (time > 1110) UniteData.base_time2 = "1100";
+    //    if (time > 1410) UniteData.base_time2 = "1400";
+    //    if (time > 1710) UniteData.base_time2 = "1700";
+    //    if (time > 2010) UniteData.base_time2 = "2000";
+    //    if (time > 2310 || time <= 210) UniteData.base_time2 = "2300";
+    //    Debug.Log(UniteData.base_time2);
     //}
 
     // 위도 경도 좌표 변환
 
+    // 단기 예보를 출력할 경우
     public void InitDataGetVilageFcst(string jsonResult)
     {
         JsonData ItemData = JsonMapper.ToObject(jsonResult);
@@ -212,7 +182,7 @@ public class WeatherGetAPI : MonoBehaviour
                 UniteData.todayWeather[fsctTime, 0] = (string)item["fcstValue"];
             }
 
-            if ((string)item["category"] == "PTY") // 강수형태(PTY) : 없음(0) / 비&눈(2) / 눈(3) / 소나기(4)
+            if ((string)item["category"] == "PTY") // 강수형태(PTY) : 없음(0) / 비(1) / 비&눈(2) / 눈(3) / 소나기(4)
             {
                 UniteData.todayWeather[fsctTime, 1] = (string)item["fcstValue"];
             }
@@ -270,23 +240,21 @@ public class WeatherGetAPI : MonoBehaviour
             if ((string)item["category"] == "TMN") // 일 최저기온(TMN)
             {
                 UniteData.tmn = float.Parse((string)item["fcstValue"]);
-                Debug.Log("일 최저기온 : " + UniteData.tmn);
             }
             
             if ((string)item["category"] == "TMX") // 일 최고기온(TMX)
             {
                 UniteData.tmx = float.Parse((string)item["fcstValue"]);
-                Debug.Log("일 최고기온 : " + UniteData.tmx);
             }
         }
 
-        for (int i=0; i< UniteData.todayWeather.GetLength(0); i++)
-        {
-            for (int j = 0; j < UniteData.todayWeather.GetLength(1); j++)
-            {
-                if (UniteData.todayWeather[i, j] != null) Debug.Log("[" + i + ", " + j + "] " + UniteData.todayWeather[i, j]);
-            }
-        }
+        //for (int i=0; i< UniteData.todayWeather.GetLength(0); i++)
+        //{
+        //    for (int j = 0; j < UniteData.todayWeather.GetLength(1); j++)
+        //    {
+        //        if (UniteData.todayWeather[i, j] != null) Debug.Log("[" + i + ", " + j + "] " + UniteData.todayWeather[i, j]);
+        //    }
+        //}
     }
 
     float RE = 6371.00877f; // 지구 반경(km)
