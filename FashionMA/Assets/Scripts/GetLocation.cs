@@ -19,6 +19,7 @@ public class GetLocation : MonoBehaviour
     private string[] locationResult = new string[3];
 
     private bool GPS;
+    private bool Init;
 
     // Start is called before the first frame update
     void Start()
@@ -66,9 +67,10 @@ public class GetLocation : MonoBehaviour
 
     void Update()
     {
-        if (UniteData.longitude != 0 && UniteData.latitude != 0)
+        if (UniteData.longitude != 0 && UniteData.latitude != 0 && !Init)
         {
             GPS = true;
+            Init = true;
         }
 
         if(GPS)
