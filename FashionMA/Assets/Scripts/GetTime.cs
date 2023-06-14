@@ -17,9 +17,9 @@ public class GetTime : MonoBehaviour
     private PointerEventData m_PointerEventData;
     private EventSystem m_EventSystem;
     public Text timeText;
-    public Light light;
+    public Sprite[] sprite = new Sprite[5];
     public Transform hours, minutes, seconds;
-    public GameObject clock;
+    public GameObject clock, BG;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,28 +33,23 @@ public class GetTime : MonoBehaviour
         hour = DateTime.Now.Hour;
         if (hour >= 0 && hour < 5)
         {
-            light.intensity = 0.9f;
-            light.color = Color.white / 1.77f;
+            BG.GetComponent<SpriteRenderer>().sprite = sprite[0];
         }
         if (hour >= 5 && hour < 9)
         {
-            light.intensity = 0.65f;
-            light.color = Color.white;
+            BG.GetComponent<SpriteRenderer>().sprite = sprite[1];
         }
         if (hour >= 9 && hour < 17)
         {
-            light.intensity = 0.8f;
-            light.color = Color.white;
+            BG.GetComponent<SpriteRenderer>().sprite = sprite[2];
         }
         if (hour >= 17 && hour < 21)
         {
-            light.intensity = 0.77f;
-            light.color = Color.white / 1.77f;
+            BG.GetComponent<SpriteRenderer>().sprite = sprite[3];
         }
         if (hour >= 21 && hour < 24)
         {
-            light.intensity = 0.65f;
-            light.color = Color.white / 1.77f;
+            BG.GetComponent<SpriteRenderer>().sprite = sprite[4];
         }
 
         if (Input.GetMouseButtonDown(0))
