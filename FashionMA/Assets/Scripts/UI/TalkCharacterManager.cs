@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class TalkCharacterManager : MonoBehaviour
 {
     [SerializeField] private GameObject icons;
+    [SerializeField] private GameObject clock;
     [SerializeField] private GameObject bottomMenu;
     [SerializeField] private GameObject talkPanels;
 
@@ -36,6 +37,7 @@ public class TalkCharacterManager : MonoBehaviour
         text_talk.text = "무엇이 궁금해?";
 
         icons.SetActive(false);
+        clock.SetActive(false);
         bottomMenu.SetActive(false);
         choicePanel.SetActive(true);
         talkPanels.SetActive(true);
@@ -44,6 +46,7 @@ public class TalkCharacterManager : MonoBehaviour
     public void SetFirst()
     { 
         icons.SetActive(true);
+        clock.SetActive(true);
         bottomMenu.SetActive(true);
         talkPanels.SetActive(false);
         choiceTalkPanel.SetActive(false);
