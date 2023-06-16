@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 // 대화창 관련 스크립트
@@ -62,8 +63,8 @@ public class TalkCharacterManager : MonoBehaviour
     }
 
     public void BtnRegion()
-    { 
-        
+    {
+        SceneManager.LoadScene("RegionWeather");
     }
 
     public void BtnInfo()

@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Quiz.unity
     guid: 4deaa1aa6ee9b3541b54c68a8255e30c
+  - enabled: 1
+    path: Assets/Scenes/RegionWeather.unity
+    guid: 3ddb60b0cacab1242b1c076f67ccf4d7
   m_configObjects: {}

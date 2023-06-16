@@ -11,19 +11,34 @@ public class RegionWeather : MonoBehaviour
     [SerializeField] private Sprite[] icons; // ¸¼À½, ºñ, ºñ&´«, ´«
     [SerializeField] private GameObject[] panels;
 
-    private GameObject[] weatherIcon;
-    private GameObject[] text_temp;
+    [SerializeField] private GameObject[] weatherIcon;
+    [SerializeField] private GameObject[] text_temp;
 
     string jsonResult;
+
+    private float[] region_temp;
+    private int[] region_weather;
+
+    private bool REGION = false;
+
+    private int check = 0;
 
     // Start is called before the first frame update
     void Start()
     {
+        REGION = false;
+
+        /*
         for (int i = 0; i < panels.Length; i++)
         {
             weatherIcon[i] = panels[i].gameObject.transform.GetChild(2).gameObject;
             text_temp[i] = panels[i].gameObject.transform.GetChild(0).gameObject;
         }
+        */
+        region_temp = new float[panels.Length];
+        region_weather = new int[panels.Length];
+
+        check = 0;
 
         UpdateRegionWeather();
     }
@@ -31,7 +46,32 @@ public class RegionWeather : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (REGION)
+        {
+            for (int i = 0; i < panels.Length; i++)
+            {
+                Debug.Log("Èþ : " + region_temp[i]);
+                text_temp[i].GetComponent<Text>().text = region_temp[i] + "";
+
+                switch (region_weather[i]) // °­¼ö ÇüÅÂ(PTY) : ¾øÀ½(0) / ºñ(1) / ºñ&´«(2) / ´«(3) / ºø¹æ¿ï(5) / ºø¹æ¿ï´«³¯¸²(6) / ´«³¯¸²(7)
+                {
+                    case 0:
+                        weatherIcon[i].GetComponent<Image>().sprite = icons[0];
+                        break;
+                    case 1:
+                        weatherIcon[i].GetComponent<Image>().sprite = icons[1];
+                        break;
+                    case 2:
+                        weatherIcon[i].GetComponent<Image>().sprite = icons[2];
+                        break;
+                    case 3:
+                        weatherIcon[i].GetComponent<Image>().sprite = icons[3];
+                        break;
+                }
                 
+            }
+            REGION = false;
+        }
     }
 
     private void UpdateRegionWeather()
@@ -44,13 +84,14 @@ public class RegionWeather : MonoBehaviour
         int[,] coordinate =
         {
             {60, 127 }, {73, 134}, {92, 131 },{ 55, 124},{60, 121 },
-            { 67, 100},{ 69, 106},{ 91, 106},{ 63, 89},{99, 77 },
-            {89, 90 }, {102, 84 },{ 98, 76},{ 58, 74},{ 50, 67},{52, 38 },{127, 127 } 
+            { 67, 100},{ 91, 106},{ 63, 89},
+            {89, 90 }, {102, 84 },{ 98, 76},{ 58, 74},{52, 38 },{127, 127 } 
         };
 
-        for(int i = 0; i< panels.Length; i++)
+        int i = 0;
+        for(i = 0; i< panels.Length; i++)
         {
-            StartCoroutine(GetWeatherDataAll(1, coordinate[i, 0], coordinate[i, 1]));
+            StartCoroutine(GetWeatherDataAll(i, coordinate[i, 0], coordinate[i, 1]));
         }
     }
 
@@ -71,7 +112,7 @@ public class RegionWeather : MonoBehaviour
             {
                 
                 jsonResult = webRequest.downloadHandler.text;
-                InitDataGetUltraSrtNcst(jsonResult, regionNum);
+                InitDataGetUltraSrtNcst(regionNum, jsonResult);
                 //Debug.Log(jsonResult);
             }
             else
@@ -81,7 +122,8 @@ public class RegionWeather : MonoBehaviour
         }
         Debug.Log("³¯¾¾ API ¼³Á¤ ¿Ï·á");
     }
-    public void InitDataGetUltraSrtNcst(string jsonResult, int regionNum)
+
+    public void InitDataGetUltraSrtNcst(int regionNum, string jsonResult)
     {
         JsonData ItemData = JsonMapper.ToObject(jsonResult);
         JsonData items = ItemData["response"]["body"]["items"]["item"];
@@ -96,30 +138,34 @@ public class RegionWeather : MonoBehaviour
             if ((string)item["category"] == "T1H") // ±â¿Â(T1H)
             {
                 temp = float.Parse((string)item["obsrValue"]);
-                text_temp[regionNum].GetComponent<Text>().text= temp.ToString();
+                region_temp[regionNum] = temp;
                 Debug.Log("±â¿Â : " + temp);
+                check++;
+
+                if (check == panels.Length - 1)
+                    REGION = true;
             }
 
             // ¸¼À½, ºñ, ºñ&´«, ´«
-            if ((string)item["category"] == "PTY") // °­¼ö ÇüÅÂ(PTY) : ¾øÀ½(0) / ºñ(1) / ºñ&´«(2) / ´«(3) / ºø¹æ¿ï(5) / ºø¹æ¿ï´«³¯¸²(6) / ´«³¯¸²(7)
+            else if ((string)item["category"] == "PTY") // °­¼ö ÇüÅÂ(PTY) : ¾øÀ½(0) / ºñ(1) / ºñ&´«(2) / ´«(3) / ºø¹æ¿ï(5) / ºø¹æ¿ï´«³¯¸²(6) / ´«³¯¸²(7)
             {
                 pty = int.Parse((string)item["obsrValue"]);
 
                 if (pty == 0) // °­¼öÇüÅÂ 0
                 {
-                    weatherIcon[regionNum].GetComponent<Image>().sprite = icons[0];
+                    region_weather[regionNum] = 0;
                 }
                 else if(pty == 1 || pty == 4 || pty == 5)
                 {
-                    weatherIcon[regionNum].GetComponent<Image>().sprite = icons[1];
+                    region_weather[regionNum] = 1;
                 }
                 else if(pty == 2 || pty == 6)
                 {
-                    weatherIcon[regionNum].GetComponent<Image>().sprite = icons[2];
+                    region_weather[regionNum] = 2;
                 }
                 else if( pty == 3 || pty == 7)
                 {
-                    weatherIcon[regionNum].GetComponent<Image>().sprite = icons[3];
+                    region_weather[regionNum] = 3;
                 }
 
                 Debug.Log("°­¼ö ÇüÅÂ : " + pty);
@@ -127,5 +173,6 @@ public class RegionWeather : MonoBehaviour
 
         }
 
+                
     }
 }
