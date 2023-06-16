@@ -119,7 +119,7 @@ public class TalkCharacterManager : MonoBehaviour
 
     public void ShowDetailWeather(int value)
     {
-        string first = (value + 1).ToString() + "시의 기온은 " + UniteData.todayWeather[value, 6] + "도, 습도는 " + UniteData.todayWeather[value, 3] + "% 야.\n";
+        string first = (value + 1).ToString() + "시의 기온은 " + UniteData.todayWeather[value, 6] + "도, 습도는 " + UniteData.todayWeather[value, 3] + "%야.\n";
         
         string second;
         if(UniteData.todayWeather[value, 1] == "1")
