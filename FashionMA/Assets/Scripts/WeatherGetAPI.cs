@@ -54,11 +54,6 @@ public class WeatherGetAPI : MonoBehaviour
         {
             UniteData.base_time_s = base_time.ToString();
         }
-
-        result = dfs_xy_conf(UniteData.latitude, UniteData.longitude);
-        nx = result["x"];
-        ny = result["y"];
-
         Debug.Log("x : " + nx + " y : " + ny);
     }
 
@@ -66,6 +61,10 @@ public class WeatherGetAPI : MonoBehaviour
     {
         if(UniteData.latitude != 0 && UniteData.longitude != 0 && !startAPI)
         {
+            result = dfs_xy_conf(UniteData.latitude, UniteData.longitude);
+            nx = result["x"];
+            ny = result["y"];
+
             StartCoroutine(GetWeatherData());
             StartCoroutine(GetTodayWeatherData());
             startAPI = true;
