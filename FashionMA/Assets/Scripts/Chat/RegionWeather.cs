@@ -142,7 +142,7 @@ public class RegionWeather : MonoBehaviour
                 Debug.Log("±â¿Â : " + temp);
                 check++;
 
-                if (check == panels.Length - 1)
+                if (check == panels.Length)
                     REGION = true;
             }
 
