@@ -16,7 +16,7 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject chatBox;
     public Text chatBoxText;
     private GameObject chatPanel;
-    private Button chatBtn, closeBtn;
+    private Button chatBtn, closeBtn, sendBtn;
     private EventTrigger rightBtn, leftBtn;
     private InputField chatInput;
     private bool rightMove, leftMove;
@@ -38,6 +38,8 @@ public class PlayerManager : MonoBehaviourPunCallbacks, IPunObservable
         chatInput = chatPanel.transform.GetChild(0).GetComponent<InputField>();
         closeBtn = chatPanel.transform.GetChild(1).GetComponent<Button>();
         closeBtn.onClick.AddListener(CloseBtnEvent);
+        sendBtn = chatPanel.transform.GetChild(2).GetComponent<Button>();
+        sendBtn.onClick.AddListener(ChatBtnEvent);
 
         GameObject btnGroup = GameObject.Find("Canvas").transform.GetChild(1).gameObject;
         chatBtn = btnGroup.transform.GetChild(0).transform.GetComponent<Button>();
