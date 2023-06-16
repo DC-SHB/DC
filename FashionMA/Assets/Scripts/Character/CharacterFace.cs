@@ -14,13 +14,17 @@ public class CharacterFace : MonoBehaviour
 
     void Start()
     {
-        ChangeFace();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (UniteData.CharacterLoad_face)
+        {
+            ChangeFace();
+            UniteData.CharacterLoad_face = false;
+        }
     }
 
     void ChangeFace()

@@ -11,13 +11,17 @@ public class TempIcon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ChangeTempUI();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (UniteData.UILoad_temp)
+        {
+            ChangeTempUI();
+            UniteData.UILoad_temp = false;
+        }
     }
 
     private void ChangeTempUI()

@@ -24,14 +24,17 @@ public class BackGroundChange : MonoBehaviour
         rain = particles[0];
         snow = particles[1];
         wind = particles[2];
-
-        ChangeBackGround_Weather();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (UniteData.UILoad_wind && UniteData.UILoad_bgweather)
+        {
+            ChangeBackGround_Weather();
+            UniteData.UILoad_wind = false;
+            UniteData.UILoad_bgweather = false;
+        }
     }
 
     void ChangeBackGround_Weather()

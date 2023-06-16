@@ -12,6 +12,12 @@ public class UniteData : MonoBehaviour
     public static string forecastUrl_srtNcst = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst"; // 초단기 실황 - getUltraSrtNcst
     public static string forecastUrl_VilageFcst = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"; // 단기 예보 - getVilageFcst
 
+    public static bool UILoad_weatherIcon = false; // api, icon
+    public static bool UILoad_bgweather = false; // api, icon
+    public static bool UILoad_temp = false; // api, icon
+    public static bool UILoad_wind = false; // api, icon
+    public static bool CharacterLoad_clothes = false; // api, icon
+    public static bool CharacterLoad_face = false; // api, icon
 
     // 선택할 예보 - 초단기 실황(0) , 단기 예보(1)
     public static int forecastTypeNum = 0;
@@ -33,8 +39,8 @@ public class UniteData : MonoBehaviour
     public static string[, ] todayWeather = new string[24, 14]; //0 : 시간, 1 : POP, PTY, PCP, REH, SNO, SKY, TMP, UUU, VVV, WAV, VEC, WSD
 
     //위도, 경도
-    public static float latitude = 0;
-    public static float longitude = 0;
+    public static float latitude = 37.5863f; // test : 37.5863f;
+    public static float longitude = 127.02f; // test : 127.02f;
 
     //위치
     public static string location0 = "0";

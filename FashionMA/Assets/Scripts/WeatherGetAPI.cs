@@ -23,6 +23,13 @@ public class WeatherGetAPI : MonoBehaviour
 
     void Awake()
     {
+        UniteData.UILoad_weatherIcon = false;
+        UniteData.UILoad_temp = false;
+        UniteData.UILoad_wind = false;
+        UniteData.UILoad_bgweather = false;
+        UniteData.CharacterLoad_clothes = false;
+        UniteData.CharacterLoad_face = false;
+
         // 현재 시간 구하기
         DateTime currentTime = DateTime.Now;
 
@@ -124,12 +131,17 @@ public class WeatherGetAPI : MonoBehaviour
             if ((string)item["category"] == "T1H") // 기온(T1H)
             {
                 UniteData.temp = float.Parse((string)item["obsrValue"]);
+                UniteData.UILoad_temp = true;
+                UniteData.CharacterLoad_clothes = true;
                 Debug.Log("기온 : " + UniteData.temp);
             }
 
             if((string)item["category"] == "PTY") // 강수 형태(PTY) : 없음(0) / 비(1) / 비&눈(2) / 눈(3) / 빗방울(5) / 빗방울눈날림(6) / 눈날림(7)
             {
                 UniteData.pty = int.Parse((string)item["obsrValue"]);
+                UniteData.UILoad_weatherIcon = true;
+                UniteData.UILoad_bgweather = true;
+                UniteData.CharacterLoad_face = true;
                 Debug.Log("강수 형태 : " + UniteData.pty);
             }
 
@@ -143,10 +155,10 @@ public class WeatherGetAPI : MonoBehaviour
             if((string)item["category"] == "WSD") // 풍속(WSD) : 바람이 약하다(~3) / 약간 강(4~8) / 강(9~13) / 매우 강(14~)
             {
                 UniteData.wsd = float.Parse((string)item["obsrValue"]);
+                UniteData.UILoad_wind = true;
                 Debug.Log("풍속 : " + UniteData.wsd);
             }
         }
-
     }
 
     //public void MakeBaseTime()

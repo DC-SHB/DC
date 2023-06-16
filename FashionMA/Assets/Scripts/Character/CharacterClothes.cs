@@ -13,13 +13,17 @@ public class CharacterClothes : MonoBehaviour
         man1.SetActive(false);
         man2.SetActive(false);
         man3.SetActive(false);
-        ChangeClothes();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (UniteData.CharacterLoad_clothes)
+        {
+            ChangeClothes();
+            UniteData.CharacterLoad_clothes = false;
+        }
     }
 
     void ChangeClothes()

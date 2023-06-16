@@ -11,13 +11,17 @@ public class WeatherIcon : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ChangeWeatherUI();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (UniteData.UILoad_weatherIcon)
+        {
+            ChangeWeatherUI();
+            UniteData.UILoad_weatherIcon = false;
+        }
     }
 
     private void ChangeWeatherUI()
