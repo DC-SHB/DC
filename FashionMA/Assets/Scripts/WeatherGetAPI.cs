@@ -20,6 +20,8 @@ public class WeatherGetAPI : MonoBehaviour
     private float nx;
     private float ny;
 
+    private bool startAPI;
+
 
     void Awake()
     {
@@ -58,8 +60,17 @@ public class WeatherGetAPI : MonoBehaviour
         ny = result["y"];
 
         Debug.Log("x : " + nx + " y : " + ny);
-        StartCoroutine(GetWeatherData());
-        StartCoroutine(GetTodayWeatherData());
+    }
+
+    void Update()
+    {
+        if(UniteData.latitude != 0 && UniteData.longitude != 0 && !startAPI)
+        {
+            StartCoroutine(GetWeatherData());
+            StartCoroutine(GetTodayWeatherData());
+            startAPI = true;
+            Debug.Log("chk");
+        }
     }
 
     IEnumerator GetWeatherData()

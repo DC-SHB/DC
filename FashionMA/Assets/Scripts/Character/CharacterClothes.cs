@@ -10,7 +10,7 @@ public class CharacterClothes : MonoBehaviour
 
     void Start()
     {
-        man1.SetActive(false);
+        //man1.SetActive(false);
         man2.SetActive(false);
         man3.SetActive(false);
 
