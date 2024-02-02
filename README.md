@@ -16,8 +16,8 @@
 ### 메인화면 - 캐릭터 및 배경
 - 온도와 날씨에 따른 캐릭터의 옷차림 및 표정 변화
 - 시간과 날씨에 따른 배경 효과 및 배경 배경
-<img src= "https://github.com/DC-SHB/FashionMA/assets/69100145/ce1d711d-5617-4c2d-a746-c6beeae3db05" height="150" />
-<img src= "https://github.com/DC-SHB/FashionMA/assets/69100145/ffd21d7a-c7d2-4493-b043-ce10503ef092" height="150" />
+<img src= "https://github.com/DC-SHB/FashionMA/assets/69100145/ce1d711d-5617-4c2d-a746-c6beeae3db05" height="200" />
+<img src= "https://github.com/DC-SHB/FashionMA/assets/69100145/ffd21d7a-c7d2-4493-b043-ce10503ef092" height="200" />
 
   
 ### 메인화면 - UI
@@ -29,17 +29,25 @@
 
 
 ### 서브화면 - 캐릭터 대화
-- 오늘의 날씨 : 현위치 기반 시간별 날씨 예보
-- 지역날씨 : 지역별 실시간 날씨 정보 제공
-- 흥미로운 정보 : 날씨와 관련된 이야기 제공
+- 오늘의 날씨 : 현재 위치을 기반으로 한 시간별 날씨 예보
+- 지역날씨 : 모든 지역의 실시간 날씨 정보를 지도를 통해 제공
+- 흥미로운 정보 : 날씨와 관련된 여러가지 정보 제공
+<img src= "https://github.com/DC-SHB/FashionMA/assets/69100145/256a2de7-8260-42c3-9e99-97f7c98263be" height="300" />
+
+  
 
 ### 서브화면 - 날씨 퀴즈
 - 날씨 관련 흥미로운 정보 O/X 퀴즈
-- 최고점 8개를 정렬해 날짜와 시간과 함께 제공하는 점수판 기능
+- 점수판 : 최고점 8개를 정렬해 날짜와 시간과 함께 제공
+<img src= "https://github.com/DC-SHB/FashionMA/assets/69100145/a13fea94-21f8-4459-8d45-3814affced7a" height="250" />
+
+
   
 ### 서브화면 - 채팅
 - 닉네임을 입력하여 채팅방 입장
 - 실시간 채팅을 통해 다른 유저와 정보 공유
+<img src= "https://github.com/DC-SHB/FashionMA/assets/69100145/50655201-2800-46bf-ab17-9fc8684f933f" height="250" />
+
 
 
 ## 💡 서비스 구성도
