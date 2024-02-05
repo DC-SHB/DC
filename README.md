@@ -5,6 +5,9 @@
 # 패션기상청
 > 날씨에 따라 변화되는 캐릭터와 배경을 통해 사용자가 시각적으로 날씨 정보를 제공받을 수 있는 어플리케이션
 
+<img src="https://img.shields.io/badge/Unity-000000?style=flat&logo=unity&logoColor=white"/>  <img src="https://img.shields.io/badge/PlayerPrefs-007AAC?style=flat">  <img src="https://img.shields.io/badge/Weather API-0D47A1?style=flat">   <img src="https://img.shields.io/badge/Naver Map API-03C75A?style=flat&logo=naver&logoColor=white">  <img src="https://img.shields.io/badge/Dust API-D1AB66?style=flat">  <img src="https://img.shields.io/badge/Photon-4285F4?style=flat">  <img src="https://img.shields.io/badge/-C%23-512BD4?style=flat&logo=C%23&logoColor=white">
+
+
 ## 📢 프로젝트 소개
 - <b>체온 유지</b> : 날씨에 맞는 옷차림을 제공하여 사용자의 체온을 유지한다.
 - <b>준비 시간 단축</b> : 외출 준비로 바쁜 사용자들의 아침 시간 고민을 해결한다.
